@@ -1,0 +1,76 @@
+\documentclass{ctacn}
+\usepackage{hhline}
+\usepackage{threeparttable}
+\usepackage{hyperref}
+\usepackage{subfigure}
+
+\newcommand{\zhnauthora}{张航宁}
+\newcommand{\zhnauthorb}{}
+\newcommand{\zhnauthorc}{}
+\newcommand{\zhncntitle}{火星气动捕获的建模与仿真}
+\newcommand{\zhnentitle}{(Undetermined)Precision of hybrid simulations in modeling numerical solvers}
+\newcommand{\zhncnabstract}{本文复现文献\cite{jqingyuan2019,dqingyuan2019}。}
+\newcommand{\zhncnkeyword}{火星大气;气动捕获制导;全系数自适应;数值预测校正;鲁棒性}
+\newcommand{\zhnenabstract}{This article is designed to help in the contribution for Control and Decision. It is divided into several sections. It consists of the styles and notes for the main text, the mathematical writing style and the topic of drawing tables and inserting figures respectively. The residuals deal with references, acknowledges, etc.}
+\newcommand{\zhnenkeyword}{Mars atmosphere; aerocapture guidance; all-coefficient adaptive; numerical predictor-corrector; robustness}
+
+\begin{document}
+
+%%%%%%%
+\cndoi{}
+\doi{\zihao{-5}10.13195/j.kzyjc.2019.0000}
+\paperdate{2018-xx-xx}{2019-xx-xx}%接收日期，修回日期
+\osid{}
+\setcounter{page}{1}
+
+%%%%%%%%%%
+%%%%%%%输入页眉显示的题目
+%%%%%%%%%%%%
+\runheading{\zhnauthora~等: \zhncntitle}%页眉设置,填写第一作者及论文题目
+\xiangmujijin{本文得到国家重点研发计划(批准号:2018YFA0703800), 空间智能控制技术重点实验室基金资助(编号:ZDSYS-2018-04), 和国家自然科学基金(批准号:U20B2054)项目资助。}%项目基金  为空会自动取消显示
+\authorcor{E-mail: yz37zhn@163.com.}%通讯作者邮箱,新投稿不修改
+\cntitle{\zhncntitle}  % 输入中文标题
+\entitle{\zhnentitle}
+
+
+%                  新投稿不要修改下面的姓名及单位
+%%%中文作者和单位，\dag代表通信作者，“作者一”代表3个字的名，“作者”代表2个字的名
+\cnauthor{\zhnauthora\makebox{$^{1\dag}$}}  %新投稿不修改
+{(中国空间技术研究院,北京100094)}  %%省会城市无需加省%%新投稿不要修改
+
+%%%中文摘要
+\cnabstract{\zhncnabstract}
+
+%%%中文关键词
+\cnkeyword{\zhncnkeyword}
+
+%%%分类号、标识码
+\clc{}  % 中文分类号，请作者自行查找并填写
+\wenxianbiaoshi{A}  % 文献标志码
+
+\citation{\zhnauthora. \zhncntitle\hspace{0pt}[J].~期刊名称,~xxxx,~xx(x):~1-xxxx.}
+
+%%%%%%%              新投稿不要修改下面的英文名及单位
+\enauthor{Hangning Zhang\makebox{$^{1,2\dag}$}}{
+(1. China Academy of Space Technology，Beijing~100094，China)}
+\enabstract{\zhnenabstract}
+\enkeyword{\zhnenkeyword}
+\maketitle
+
+\begin{multicols}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 正文
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{article.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 作者简介，填写全部作者的简介
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{authorinfo}
+	\vspace{3pt}
+	\zihao{-5}{\zhnauthora\,(1997$-$), 男, 博士研究生, 从事XXX、XXX等研究, E-mail: yz37zhn@163.com;}
+\end{authorinfo}
+
+\end{multicols}
+\end{document}

@@ -1,5 +1,5 @@
 \section{飞行器再入动力学方程}
-本节推导不考虑火星自转时的飞行器再入动力学方程，
+本节推导不考虑火星自转时的飞行器再入制导的动力学方程，
 假设飞行器只受空气动力和重力，无风干扰。
 
 首先建立坐标系。
@@ -26,12 +26,95 @@ $Ox$轴指向飞行器质心$M$，
 $Oy$轴平行于飞行器当地水平面的东向，
 $Oz$轴平行于飞行器当地水平面的北向，
 
-4. 速度坐标系($M-x_vy_vz_v$)：
+4. 飞行器速度坐标系($M-x_vy_vz_v$)：
 原点$M$位于飞行器质心，
 $Mx_v$轴平行于$Ox$轴，
 $Mz_v$轴指向飞行器速度方向，
 $My_v$轴与$Mx_v$和$Mz_v$轴组成右手正交坐标系。
 
+气动飞行期间轨道动力学建立在火星赤道固连坐标系$O-XYZ$下，
+状态变量定义为：
+\[[r\quad\theta\quad\phi\quad V\quad\gamma\quad\psi]\]
+其中，
+$r$为飞行器距球心的距离，
+$\theta$和$\phi$分别为经纬度，
+$V$为火星赤道固连坐标系下的速度大小，
+$\gamma$和$\psi$分别为航迹角和航向角。
+航迹角定义为飞行器速度向量与当地水平面的夹角，
+速度方向向上为正；
+航向角定义为当地北向与飞行器速度向量在当地水平面的投影的夹角，
+速度方向向东偏为正。
+
+设一向量$\vec{x}(t)$绕旋转轴$\vec{\omega}$作匀速圆周运动，
+则$\vec{x}(t)$的线速度为
+\[\dot{\vec{x}}(t)=\vec{\omega}\times\vec{x}(t)\]
+证明：由罗德里格斯((Rodrigues)旋转公式
+\[R=\cos\theta I+(1-\cos\theta)\vec{n}\vec{n}^\text{T}+\sin\theta\vec{n}^{\wedge}\]
+其中
+$R$为旋转矩阵，
+$n$为单位旋转轴，
+$\theta$为旋转角度,
+$\vec{n}^{\wedge}$表示向量$\vec{n}$叉乘对应的反对称矩阵。
+将向量$\vec{\omega}$写成$\vec{\omega}=\omega\vec{n}$，
+并将旋转矩阵对时间$t$求导得到
+\begin{align*}
+    \frac{\text{d}}{\text{d}t}R(t)
+    =& \frac{\text{d}}{\text{d}t}\left(
+        \cos\omega t I
+        +(1-\cos\omega t)\frac{\vec{\omega}}{\omega}\frac{\vec{\omega}^\text{T}}{\omega}
+        +\sin\omega t\frac{\vec{\omega}^{\wedge}}{\omega}
+    \right) \\
+    =& -\omega\sin\omega tI
+        +\frac{\sin\omega t}{\omega}\vec{\omega}\vec{\omega}^\text{T}
+        +\cos\omega t\cdot\vec{\omega}^{\wedge} \\
+    \dot{R}(t)\vec{x}_0
+    =& -\omega\sin\omega t\vec{x}_0
+        +\frac{\sin\omega t}{\omega}\vec{\omega}^\text{T}\vec{x}_0\vec{\omega}
+        +\cos\omega t\cdot\vec{\omega}\times\vec{x}_0 \\
+\end{align*}
+另因为
+\begin{align*}
+    \vec{\omega}\times R(t)\vec{x}_0
+    =& \cos\omega t\cdot\vec{\omega}\times\vec{x}_0
+        +\frac{1-\cos\omega t}{\omega^2}\vec{\omega}\times\vec{\omega}\vec{\omega}^\text{T}\vec{x}_0 \\
+        &+ \frac{\sin\omega t}{\omega}\vec{\omega}\times(\vec{\omega}\times\vec{x}_0) \\
+    =& \cos\omega t\cdot\vec{\omega}\times\vec{x}_0
+        +\frac{\sin\omega t}{\omega}(\vec{\omega}^\text{T}\vec{x}_0\vec{\omega}
+        -\vec{\omega}^\text{T}\vec{\omega}\vec{x}_0)
+\end{align*}
+所以
+\[\dot{\vec{x}}(t)=\dot{R}(t)\vec{x}_0=\vec{\omega}\times R(t)\vec{x}_0=\vec{\omega}\times\vec{x}(t)\]
+
 飞行器在三维空间中的运动可以由
-位置$\boldsymbol{r}(t)$和
-速度$\boldsymbol{v}(t)$两个向量来表征。
+位置$\vec{r}(t)$和
+速度$\vec{v}(t)$两个向量来表征。
+
+不考虑火星自转时的飞行器再入制导的动力学方程为
+\begin{align*}
+    \dot{r} =& V\sin\gamma \\
+    \dot{\theta} =& \frac{V \cos \gamma \sin \psi}{r \cos \phi} \\
+    \dot{\phi} =& \frac{V \cos \gamma \cos \psi}{r} \\
+    \dot{V} =& -\frac{D}{m} - g \sin \gamma \\
+    \dot{\gamma} =& \frac{1}{V}\left[\frac{L\cos\sigma}{m}+\left(\frac{V^2}{r}-g\right)\cos\gamma\right] \\
+    \dot{\psi} =& \frac{1}{V}\left[-\frac{L\sin\sigma}{m\cos\gamma}+g\cos\gamma\sin\psi\tan\phi\right]
+\end{align*}
+其中$L$和$D$分别为升力和阻力，
+其表达式为
+\begin{equation*}
+    \left[\begin{matrix}
+        L \\ D
+    \end{matrix}\right]
+    = \frac{1}{2}\rho V^2S_{\text{ref}}
+    \left[\begin{matrix}
+        C_L \\ C_D
+    \end{matrix}\right]
+\end{equation*}
+其中，
+$\rho$为火星大气密度，
+$S_{\text{ref}}$为飞行器的气动参考面积，
+$C_L$、$C_D$分别为升力系数和阻力系数，
+为简化问题可设除了大气密度$\rho$以外其余均为常数。
+简化大气指数模型中，
+\[\rho=\rho_0e^{-h/h_s}\]
+其中，参考密度$\rho_0=1.474\times10^7$kg/km$^2$，
+比例高度$h_s=8.8057$km。

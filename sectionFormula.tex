@@ -1,0 +1,135 @@
+\section{基本公式推导}
+下面推导常用的一些公式。
+
+% ////////////////////////////////////////
+\subsection{角速度公式}
+设一向量$\vec{x}(t)$绕旋转轴$\vec{\omega}$作匀速圆周运动，
+则$\vec{x}(t)$的线速度为
+\[\dot{\vec{x}}(t)=\vec{\omega}\times\vec{x}(t)\]
+\textbf{证明}：由罗德里格斯((Rodrigues)旋转公式
+\[R=\cos\theta I+(1-\cos\theta)\vec{n}\vec{n}^\text{T}+\sin\theta\vec{n}^{\wedge}\]
+其中
+$R$为旋转矩阵，
+$n$为单位旋转轴，
+$\theta$为旋转角度,
+$\vec{n}^{\wedge}$表示向量$\vec{n}$叉乘对应的反对称矩阵。
+将向量$\vec{\omega}$写成$\vec{\omega}=\omega\vec{n}$，
+并将旋转矩阵对时间$t$求导得到
+\begin{align*}
+    \frac{\text{d}}{\text{d}t}R(t)
+    =& \frac{\text{d}}{\text{d}t}\left(
+        \cos\omega t I
+        +(1-\cos\omega t)\frac{\vec{\omega}}{\omega}\frac{\vec{\omega}^\text{T}}{\omega}
+        +\sin\omega t\frac{\vec{\omega}^{\wedge}}{\omega}
+    \right) \\
+    =& -\omega\sin\omega tI
+        +\frac{\sin\omega t}{\omega}\vec{\omega}\vec{\omega}^\text{T}
+        +\cos\omega t\cdot\vec{\omega}^{\wedge} \\
+    \dot{R}(t)\vec{x}_0
+    =& -\omega\sin\omega t\vec{x}_0
+        +\frac{\sin\omega t}{\omega}\vec{\omega}^\text{T}\vec{x}_0\vec{\omega}
+        +\cos\omega t\cdot\vec{\omega}\times\vec{x}_0
+\end{align*}
+另因为
+\begin{align*}
+    \vec{\omega}\times R(t)\vec{x}_0
+    =& \cos\omega t\cdot\vec{\omega}\times\vec{x}_0
+        +\frac{1-\cos\omega t}{\omega^2}\vec{\omega}\times\vec{\omega}\vec{\omega}^\text{T}\vec{x}_0 \\
+        &+ \frac{\sin\omega t}{\omega}\vec{\omega}\times(\vec{\omega}\times\vec{x}_0) \\
+    =& \cos\omega t\cdot\vec{\omega}\times\vec{x}_0
+        +\frac{\sin\omega t}{\omega}(\vec{\omega}^\text{T}\vec{x}_0\vec{\omega}
+        -\vec{\omega}^\text{T}\vec{\omega}\vec{x}_0)
+\end{align*}
+所以
+\[\dot{\vec{x}}(t)=\dot{R}(t)\vec{x}_0=\vec{\omega}\times R(t)\vec{x}_0=\vec{\omega}\times\vec{x}(t)\]
+
+% ////////////////////////////////////////
+\subsection{旋转坐标系下的速度和加速度}
+旋转坐标系$\mathcal{F}_2$绕惯性坐标系$\mathcal{F}_1$以角速度$\vec{\omega}$旋转，
+设$\mathcal{F}_1$下位置向量的一阶导和二阶导分别为
+$\dot{\vec{r}}$和$\ddot{\vec{r}}$，
+$\mathcal{F}_2$下位置向量的一阶导和二阶导为
+$\overset{\circ}{\vec{r}}$和$\overset{\circ\circ}{\vec{r}}$，
+满足
+\begin{align*}
+    \dot{\vec{r}}
+    =& \overset{\circ}{\vec{r}}
+    + \vec{\omega}\times\vec{r} \\
+    \ddot{\vec{r}}
+    =& \overset{\circ\circ}{\vec{r}}
+    + 2\vec{\omega}\times\overset{\circ}{\vec{r}}
+    + \overset{\circ}{\vec{\omega}}\times\vec{r}
+    + \vec{\omega}\times(\vec{\omega}\times\vec{r})
+\end{align*}
+\textbf{证明}：
+设同一向量$\vec{r}$在坐标系$\mathcal{F}_1$和$\mathcal{F}_2$下的坐标分别为
+\begin{equation*}
+    \vec{r} = \left[\begin{matrix}
+        \vec{e}_x & \vec{e}_y & \vec{e}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        x_1 \\ y_1 \\ z_1
+    \end{matrix}\right]
+    = \left[\begin{matrix}
+        \vec{a}_x & \vec{a}_y & \vec{a}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        x_2 \\ y_2 \\ z_2
+    \end{matrix}\right]
+\end{equation*}
+其中$[\vec{e}_x\ \vec{e}_y\ \vec{e}_z]$表示惯性坐标系$\mathcal{F}_1$下的单位向量坐标轴，
+$[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示惯性坐标系$\mathcal{F}_1$下的单位向量，
+三个单位向量张成旋转坐标系$\mathcal{F}_2$，
+则向量$\vec{r}$的一阶导
+\begin{align*}
+    \dot{\vec{r}}
+    =& \left[\begin{matrix}
+        \dot{\vec{a}}_x & \dot{\vec{a}}_y & \dot{\vec{a}}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        x_2 \\ y_2 \\ z_2
+    \end{matrix}\right]
+    + \left[\begin{matrix}
+        \vec{a}_x & \vec{a}_y & \vec{a}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        \dot{x}_2 \\ \dot{y}_2 \\ \dot{z}_2
+    \end{matrix}\right] \\
+    =& \vec{\omega}\times
+    \left[\begin{matrix}
+        \vec{a}_x & \vec{a}_y & \vec{a}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        x_2 \\ y_2 \\ z_2
+    \end{matrix}\right]
+    + \overset{\circ}{\vec{r}} \\
+    =& \vec{\omega}\times\vec{r} + \overset{\circ}{\vec{r}}
+\end{align*}
+使用坐标系的记法写作
+\begin{align*}
+    \dot{\vec{r}}
+    =& \frac{\text{d}}{\text{d}t}(\mathcal{F}_2\vec{r}_2) \\
+    =& \mathcal{F}_2\dot{\vec{r}}_2
+    + \dot{\mathcal{F}_2}\vec{r}_2 \\
+    =& \mathcal{F}_2\dot{\vec{r}}_2
+    + \vec{\omega} \times \mathcal{F}_2\vec{r}_2 \\
+    =& \mathcal{F}_2\dot{\vec{r}}_2
+    + \vec{\omega} \times \mathcal{F}_1\vec{r}_1
+\end{align*}
+对上式进一步求导得
+\begin{align*}
+    \ddot{\vec{r}}
+    =& \vec{\omega} \times \mathcal{F}_2\dot{\vec{r}}_2
+    + \mathcal{F}_2\ddot{\vec{r}}_2
+    + \dot{\vec{\omega}} \times \mathcal{F}_1\vec{r}_1 \\
+    &+ \vec{\omega} \times (\vec{\omega} \times \mathcal{F}_21\vec{r}_1
+    + \mathcal{F}_2\dot{\vec{r}}_2) \\
+    =& \mathcal{F}_2\ddot{\vec{r}}_2
+    + 2\vec{\omega} \times \mathcal{F}_2\dot{\vec{r}}_2 \\
+    &+ \dot{\vec{\omega}} \times \mathcal{F}_1\vec{r}_1
+    + \vec{\omega} \times (\vec{\omega} \times \mathcal{F}_1\vec{r}_1) \\
+    =& \overset{\circ\circ}{\vec{r}}
+    + 2\vec{\omega}\times\overset{\circ}{\vec{r}}
+    + \dot{\omega}\times\vec{r}
+    + \vec{\omega}\times(\vec{\omega}\times\vec{r})
+\end{align*}

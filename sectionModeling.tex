@@ -2,16 +2,16 @@
 本节推导不考虑火星自转时的飞行器再入制导的动力学方程，
 假设飞行器只受空气动力和重力，无风干扰。
 
-首先建立坐标系。
+首先建立坐标系\cite{mdelong2006}。
 
-1. 火星赤道惯性坐标系($O-X_IY_IZ_I$)：
+1. 火星赤道惯性坐标系($OX_IY_IZ_I$)：
 原点$O$位于火星球心，
 $OX_I$轴指向火星赤道平面与黄道平面相交节线的升交点，
 $OZ_I$轴垂直于赤道平面指向北极，
 $OY_I$轴与$OX_I$和$OZ_I$轴组成右手正交坐标系。
 该坐标系与地球赤道惯性坐标系定义相仿。
 
-2. 火星赤道固连坐标系($O-XYZ$)：
+2. 火星赤道固连坐标系($OXYZ$)：
 原点$O$位于火星球心，
 $OX$轴在赤道平面内指向零经度线，
 $OZ$轴垂直于赤道平面指向北极，
@@ -19,14 +19,14 @@ $OY$轴与$OX$和$OZ$轴组成右手正交坐标系。
 该坐标系与火星固连，
 并相对火星赤道惯性坐标系以火星自转角速度$\omega$转动。
 
-3. 飞行器位置坐标系($O-xyz$)：
+3. 飞行器位置坐标系($Oxyz$)：
 又称"天东北坐标系"，
 原点$O$位于火星球心，
 $Ox$轴指向飞行器质心$M$，
-$Oy$轴平行于飞行器当地水平面的东向，
-$Oz$轴平行于飞行器当地水平面的北向，
+$Oy$轴在赤道平面与$Ox$轴垂直，
+$Oz$轴与$Ox$和$Oy$轴组成右手正交坐标系。
 
-4. 飞行器速度坐标系($M-x_vy_vz_v$)：
+4. 飞行器速度坐标系($Mx_vy_vz_v$)：
 原点$M$位于飞行器质心，
 $Mx_v$轴平行于$Ox$轴，
 $Mz_v$轴指向飞行器速度方向，
@@ -37,17 +37,52 @@ $My_v$轴与$Mx_v$和$Mz_v$轴组成右手正交坐标系。
 \[[r\quad\theta\quad\phi\quad V\quad\gamma\quad\psi]\]
 其中，
 $r$为飞行器距球心的距离，
-$\theta$和$\phi$分别为经纬度，
+$\theta$为飞行器当前经度，向东为正，
+$\phi$为飞行器当前纬度，向北为正，
 $V$为火星赤道固连坐标系下的速度大小，
 $\gamma$和$\psi$分别为航迹角和航向角。
 航迹角定义为飞行器速度向量与当地水平面的夹角，
-速度方向向上为正；
-航向角定义为当地北向与飞行器速度向量在当地水平面的投影的夹角，
-速度方向向东偏为正。
+速度方向沿铅锤面向上为正；
+航向角定义为当地东向与飞行器速度向量在当地水平面的投影的夹角，
+速度方向向北偏为正。
 
 飞行器在三维空间中的运动可以由
 位置$\vec{r}(t)$和
 速度$\vec{v}(t)$两个向量来表征。
+
+用$\vec{i}$,$\vec{j}$,$\vec{k}$分别表示位置坐标系$Oxyz$的三轴单位向量在固连坐标系$OXYZ$下的坐标，
+与前文中的$\vec{a}_x$,$\vec{a}_y$,$\vec{a}_z$表示类似，
+则固连坐标系下的位置向量$\vec{r}$、速度向量$\vec{V}$、火星角速度向量$\vec{\omega}$分别表示成位置坐标系下的向量为
+\begin{align*}
+    \vec{r} =& r\vec{i} \\
+    \vec{V} =& V\sin\gamma\vec{i} + V\cos\gamma\cos\psi\vec{j} + V\cos\gamma\sin\psi\vec{k} \\
+    \vec{\omega} =& \omega\sin\phi\vec{i} + \omega\cos\phi\vec{k}
+\end{align*}
+举例说明，
+用$\vec{e}_x$,$\vec{e}_y$,$\vec{e}_z$分别表示固连坐标系$OXYZ$的三轴单位向量在固连坐标系下的坐标，
+即$[\vec{e}_x\ \vec{e}_y\ \vec{e}_z]$为单位矩阵，
+则速度向量可以表示为
+\begin{equation*}
+    \vec{V}
+    =\left[\begin{matrix}
+        \vec{e}_x & \vec{e}_y & \vec{e}_z
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        V_x \\ V_y \\ V_z
+    \end{matrix}\right]
+    =\left[\begin{matrix}
+        \vec{i} & \vec{j} & \vec{k}
+    \end{matrix}\right]
+    \left[\begin{matrix}
+        V\sin\gamma \\ V\cos\gamma\cos\psi \\ V\cos\gamma\sin\psi
+    \end{matrix}\right]
+\end{equation*}
+
+坐标系$Oxyz$是坐标系$OXYZ$绕$OZ$轴正向转动$\theta$角，然后绕$Oy$轴负向转动$\phi$角得到的，
+因此，坐标系$Oxyz$绕坐标系$OXYZ$的角速度大小$\Omega$为
+\[\Omega = \dot{\theta} + \dot{\phi}\]
+位置坐标系$Oxyz$下的角速度向量$\vec{\Omega}$为
+\[\vec{\Omega} = \dot{\theta}\sin\phi\vec{i} - \dot{\phi}\vec{j} +\dot{\theta}\cos\phi\vec{k}\]
 
 不考虑火星自转时的飞行器再入制导的动力学方程为
 \begin{align*}

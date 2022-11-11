@@ -77,8 +77,8 @@ $\overset{\circ}{\vec{r}}$和$\overset{\circ\circ}{\vec{r}}$，
         x_2 \\ y_2 \\ z_2
     \end{matrix}\right]
 \end{equation*}
-其中$[\vec{e}_x\ \vec{e}_y\ \vec{e}_z]$表示惯性坐标系$\mathcal{F}_1$下的单位向量坐标轴，
-$[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示惯性坐标系$\mathcal{F}_1$下的单位向量，
+其中$[\vec{e}_x\ \vec{e}_y\ \vec{e}_z]$表示惯性坐标系$\mathcal{F}_1$下的三轴单位向量，
+$[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示坐标系$\mathcal{F}_2$的三轴单位向量在惯性坐标系$\mathcal{F}_1$下的坐标，
 三个单位向量张成旋转坐标系$\mathcal{F}_2$，
 则向量$\vec{r}$的一阶导
 \begin{align*}
@@ -122,7 +122,7 @@ $[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示惯性坐标系$\mathcal{F}_1$下的单
     =& \vec{\omega} \times \mathcal{F}_2\dot{\vec{r}}_2
     + \mathcal{F}_2\ddot{\vec{r}}_2
     + \dot{\vec{\omega}} \times \mathcal{F}_1\vec{r}_1 \\
-    &+ \vec{\omega} \times (\vec{\omega} \times \mathcal{F}_21\vec{r}_1
+    &+ \vec{\omega} \times (\vec{\omega} \times \mathcal{F}_2\vec{r}_2
     + \mathcal{F}_2\dot{\vec{r}}_2) \\
     =& \mathcal{F}_2\ddot{\vec{r}}_2
     + 2\vec{\omega} \times \mathcal{F}_2\dot{\vec{r}}_2 \\
@@ -130,6 +130,9 @@ $[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示惯性坐标系$\mathcal{F}_1$下的单
     + \vec{\omega} \times (\vec{\omega} \times \mathcal{F}_1\vec{r}_1) \\
     =& \overset{\circ\circ}{\vec{r}}
     + 2\vec{\omega}\times\overset{\circ}{\vec{r}}
-    + \dot{\omega}\times\vec{r}
+    + \dot{\vec{\omega}}\times\vec{r}
     + \vec{\omega}\times(\vec{\omega}\times\vec{r})
 \end{align*}
+其中$\vec{\omega}$在两个坐标系下的坐标相等，
+即$\dot{\vec{\omega}}=\overset{\circ}{\vec{\omega}}$。
+

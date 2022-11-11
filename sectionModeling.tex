@@ -53,15 +53,15 @@ $\gamma$和$\psi$分别为航迹角和航向角。
 用$\vec{i}$,$\vec{j}$,$\vec{k}$分别表示位置坐标系$Oxyz$的三轴单位向量在固连坐标系$OXYZ$下的坐标，
 与前文中的$\vec{a}_x$,$\vec{a}_y$,$\vec{a}_z$表示类似，
 则固连坐标系下的位置向量$\vec{r}$、速度向量$\vec{V}$、火星角速度向量$\vec{\omega}$分别表示成位置坐标系下的向量为
-\begin{align*}
-    \vec{r} =& r\vec{i} \\
-    \vec{V} =& V\sin\gamma\vec{i} + V\cos\gamma\cos\psi\vec{j} + V\cos\gamma\sin\psi\vec{k} \\
-    \vec{\omega} =& \omega\sin\phi\vec{i} + \omega\cos\phi\vec{k}
-\end{align*}
+\begin{align}
+    \vec{r} =& r\vec{i} \label{eqModelr}\\
+    \vec{V} =& V\sin\gamma\vec{i} + V\cos\gamma\cos\psi\vec{j} + V\cos\gamma\sin\psi\vec{k} \label{eqModelV}\\
+    \vec{\omega} =& \omega\sin\phi\vec{i} + \omega\cos\phi\vec{k} \notag
+\end{align}
 举例说明，
 用$\vec{e}_x$,$\vec{e}_y$,$\vec{e}_z$分别表示固连坐标系$OXYZ$的三轴单位向量在固连坐标系下的坐标，
 即$[\vec{e}_x\ \vec{e}_y\ \vec{e}_z]$为单位矩阵，
-则速度向量可以表示为
+则速度向量式\eqref{eqModelV}可以表示为
 \begin{equation*}
     \vec{V}
     =\left[\begin{matrix}
@@ -83,16 +83,31 @@ $\gamma$和$\psi$分别为航迹角和航向角。
 \[\Omega = \dot{\theta} + \dot{\phi}\]
 位置坐标系$Oxyz$下的角速度向量$\vec{\Omega}$为
 \[\vec{\Omega} = \dot{\theta}\sin\phi\vec{i} - \dot{\phi}\vec{j} +\dot{\theta}\cos\phi\vec{k}\]
+由此可以得出$\vec{i}$,$\vec{j}$,$\vec{k}$相对固连坐标系$OXYZ$的时间导数
+\begin{align*}
+    \frac{\text{\text{\text{\text{\text{d}}}}}\vec{i}}{\text{\text{\text{\text{\text{d}}}}}t} &=\vec{\omega} \times \vec{i}
+    =  \left(\cos \phi \frac{\text{\text{\text{\text{\text{d}}}}}\theta}{\text{\text{\text{\text{\text{d}}}}}t}\right) \vec{j}
+    + \left(\frac{\text{\text{\text{\text{\text{d}}}}}\phi}{\text{\text{\text{\text{\text{d}}}}}t}\right) \vec{k} \\
+    \frac{\text{d}\vec{j}}{\text{d}t} &=\vec{\omega} \times \vec{j}
+    = -\left(\cos \phi \frac{\text{d}\theta}{\text{d}t}\right) \vec{i}
+    + \left(\sin \phi \frac{\text{d}\theta}{\text{d}t}\right) \vec{k} \\
+    \frac{\text{d}\vec{k}}{\text{d}t} &=\vec{\omega} \times \vec{k}
+    = -\left(\frac{\text{d}\phi}{\text{d}t}\right) \vec{i}
+    - \left(\sin \phi \frac{\text{d}\theta}{\text{d}t}\right) \vec{j}
+\end{align*}
+式\eqref{eqModelr}求导得到速度
+\[\vec{V}=\frac{\text{d} \vec{r}}{\text{d} t}=\left(\frac{\text{d} r}{\text{d} t}\right) \vec{i}+\left(r \cos \phi \frac{\text{d} \theta}{\text{d} t}\right) \vec{j}+\left(r \frac{\text{d} \phi}{\text{d} t}\right) \vec{k}\]
+与式\eqref{eqModelV}比较得到
 
 不考虑火星自转时的飞行器再入制导的动力学方程为
-\begin{align*}
+\begin{align}
     \dot{r} =& V\sin\gamma \\
     \dot{\theta} =& \frac{V \cos \gamma \sin \psi}{r \cos \phi} \\
     \dot{\phi} =& \frac{V \cos \gamma \cos \psi}{r} \\
     \dot{V} =& -\frac{D}{m} - g \sin \gamma \\
     \dot{\gamma} =& \frac{1}{V}\left[\frac{L\cos\sigma}{m}+\left(\frac{V^2}{r}-g\right)\cos\gamma\right] \\
     \dot{\psi} =& \frac{1}{V}\left[-\frac{L\sin\sigma}{m\cos\gamma}+g\cos\gamma\sin\psi\tan\phi\right]
-\end{align*}
+\end{align} \label{eqModelTotal}
 其中$L$和$D$分别为升力和阻力，
 其表达式为
 \begin{equation*}

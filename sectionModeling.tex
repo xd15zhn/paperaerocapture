@@ -1,3 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Model
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{飞行器再入动力学方程}
 本节推导不考虑火星自转时的飞行器再入制导的动力学方程，
 假设飞行器只受空气动力和重力，无风干扰。
@@ -96,20 +99,28 @@ $\gamma$和$\psi$分别为航迹角和航向角。
     - \left(\sin \phi \frac{\text{d}\theta}{\text{d}t}\right) \vec{j}
 \end{align*}
 式\eqref{eqModelr}求导得到速度
-\[\vec{V}=\frac{\text{d} \vec{r}}{\text{d} t}=\left(\frac{\text{d} r}{\text{d} t}\right) \vec{i}+\left(r \cos \phi \frac{\text{d} \theta}{\text{d} t}\right) \vec{j}+\left(r \frac{\text{d} \phi}{\text{d} t}\right) \vec{k}\]
-与式\eqref{eqModelV}比较得到
+\[
+    \vec{V}=\frac{\text{d}\vec{r}}{\text{d}t}
+    =\left(\frac{\text{d}r}{\text{d}t}\right)\vec{i}
+    +\left(r\cos\phi\frac{\text{d}\theta}{\text{d}t}\right)\vec{j}
+    +\left(r\frac{\text{d}\phi}{\text{d}t}\right)\vec{k}
+\]
+与式\eqref{eqModelV}比较可得到
+\begin{align*}
+    \frac{\text{d}r}{\text{d}t} &=V\sin\gamma \\
+    \frac{\text{d}\theta}{\text{d}t}&=\frac{V\cos\gamma\sin\psi}{r\cos\phi} \\
+    \frac{\text{d}\phi}{\text{d}t}&=\frac{V\cos\gamma\cos\psi}{r}
+\end{align*}
+对$\vec{V}$求导可以得到
+\begin{align*}
+    \frac{d \vec{V}}{d t}=& {\left[\sin \gamma \frac{d V}{d t}+V \cos \gamma \frac{d \gamma}{d t}-\frac{V^{2}}{r} \cos ^{2} \gamma\right] \vec{i} } \\
+    &+\left[\cos \gamma \sin \psi \frac{d V}{d t}-V \sin \gamma \sin \psi \frac{d \gamma}{d t}+V \cos \gamma \cos \psi \frac{d \psi}{d t}\right.\\
+    &\left.+\frac{V^{2}}{r} \cos \gamma \sin \psi(\sin \gamma-\cos \gamma \cos \psi \tan \phi)\right] \vec{j} \\
+    &+\left[\cos \gamma \cos \psi \frac{d V}{d t}-V \sin \gamma \cos \psi \frac{d \gamma}{d t}-V \cos \gamma \sin \psi \frac{d \psi}{d t}\right.\\
+    &\left.+\frac{V^{2}}{r} \cos \gamma\left(\sin \gamma \cos \psi+\cos \gamma \sin ^{2} \psi \tan \phi\right)\right] \vec{k}
+\end{align*}
 
-不考虑火星自转时的飞行器再入制导的动力学方程为
-\begin{align}
-    \dot{r} =& V\sin\gamma \\
-    \dot{\theta} =& \frac{V \cos \gamma \sin \psi}{r \cos \phi} \\
-    \dot{\phi} =& \frac{V \cos \gamma \cos \psi}{r} \\
-    \dot{V} =& -\frac{D}{m} - g \sin \gamma \\
-    \dot{\gamma} =& \frac{1}{V}\left[\frac{L\cos\sigma}{m}+\left(\frac{V^2}{r}-g\right)\cos\gamma\right] \\
-    \dot{\psi} =& \frac{1}{V}\left[-\frac{L\sin\sigma}{m\cos\gamma}+g\cos\gamma\sin\psi\tan\phi\right]
-\end{align} \label{eqModelTotal}
-其中$L$和$D$分别为升力和阻力，
-其表达式为
+气动力的升力和阻力表达式为
 \begin{equation*}
     \left[\begin{matrix}
         L \\ D
@@ -124,7 +135,12 @@ $\rho$为火星大气密度，
 $S_{\text{ref}}$为飞行器的气动参考面积，
 $C_L$、$C_D$分别为升力系数和阻力系数，
 为简化问题可设除了大气密度$\rho$以外其余均为常数。
-简化大气指数模型中，
+升力、阻力和速度三个向量位于同一平面内，称为阻力平面。
+阻力平面与铅锤面的夹角称为倾侧角$\sigma<90^{\circ}$。
+阻力和速度方向相反，
+升力在阻力平面内与速度向量垂直，方向向上。
+
+火星大气密度$\rho$在简化大气指数模型中可以用
 \[\rho=\rho_0e^{-h/h_s}\]
-其中，参考密度$\rho_0=1.474\times10^7$kg/km$^2$，
+表示，其中参考密度$\rho_0=1.474\times10^7$kg/km$^2$，
 比例高度$h_s=8.8057$km。

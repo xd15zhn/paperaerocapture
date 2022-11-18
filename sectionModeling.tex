@@ -9,7 +9,7 @@
 
 1. 火星赤道惯性坐标系($OX_IY_IZ_I$)：
 原点$O$位于火星球心，
-$OX_I$轴指向火星赤道平面与黄道平面相交节线的升交点，
+$OX_I$轴指向火星赤道平面与黄道平面相交线的升交点，
 $OZ_I$轴垂直于赤道平面指向北极，
 $OY_I$轴与$OX_I$和$OZ_I$轴组成右手正交坐标系。
 该坐标系与地球赤道惯性坐标系定义相仿。
@@ -31,9 +31,9 @@ $Oz$轴与$Ox$和$Oy$轴组成右手正交坐标系。
 
 4. 飞行器速度坐标系($Mx_vy_vz_v$)：
 原点$M$位于飞行器质心，
-$Mx_v$轴平行于$Ox$轴，
-$Mz_v$轴指向飞行器速度方向，
-$My_v$轴与$Mx_v$和$Mz_v$轴组成右手正交坐标系。
+$Mx_v$轴沿飞行器的质心速度方向，
+$My_v$轴在铅垂平面内垂直于$Mx_v$轴向上，
+$Mz_v$轴与$Mx_v$和$My_v$轴组成右手正交坐标系。
 
 气动飞行期间轨道动力学建立在火星赤道固连坐标系$O-XYZ$下，
 状态变量定义为：
@@ -112,13 +112,21 @@ $\gamma$和$\psi$分别为航迹角和航向角。
     \frac{\text{d}\phi}{\text{d}t}&=\frac{V\cos\gamma\cos\psi}{r}
 \end{align*}
 对$\vec{V}$求导可以得到
-\begin{align*}
-    \frac{d \vec{V}}{d t}=& {\left[\sin \gamma \frac{d V}{d t}+V \cos \gamma \frac{d \gamma}{d t}-\frac{V^{2}}{r} \cos ^{2} \gamma\right] \vec{i} } \\
-    &+\left[\cos \gamma \sin \psi \frac{d V}{d t}-V \sin \gamma \sin \psi \frac{d \gamma}{d t}+V \cos \gamma \cos \psi \frac{d \psi}{d t}\right.\\
-    &\left.+\frac{V^{2}}{r} \cos \gamma \sin \psi(\sin \gamma-\cos \gamma \cos \psi \tan \phi)\right] \vec{j} \\
-    &+\left[\cos \gamma \cos \psi \frac{d V}{d t}-V \sin \gamma \cos \psi \frac{d \gamma}{d t}-V \cos \gamma \sin \psi \frac{d \psi}{d t}\right.\\
-    &\left.+\frac{V^{2}}{r} \cos \gamma\left(\sin \gamma \cos \psi+\cos \gamma \sin ^{2} \psi \tan \phi\right)\right] \vec{k}
-\end{align*}
+\begin{align}
+    \frac{\text{d}\vec{V}}{\text{d}t}
+    =& \left[\sin\gamma\frac{\text{d}V}{\text{d}t}
+    + V\cos\gamma\frac{\text{d}\gamma}{\text{d}t}
+    - \frac{V^{2}}{r}\cos^2\gamma\right]\vec{i} \notag\\
+    +& \left[\cos\gamma\sin\psi\frac{\text{d}V}{\text{d}t}
+    - V\sin\gamma\sin\psi\frac{\text{d}\gamma}{\text{d}t}
+    + V\cos\gamma\cos\psi\frac{\text{d}\psi}{\text{d}t}\right. \notag\\
+    +& \left.\frac{V^{2}}{r}\cos\gamma\sin\psi(\sin\gamma
+    - \cos\gamma\cos\psi\tan\phi)\right]\vec{j} \notag\\
+    +& \left[\cos\gamma\cos\psi\frac{\text{d}V}{\text{d}t}
+    - V\sin\gamma\cos\psi\frac{\text{d}\gamma}{\text{d}t}
+    - V\cos\gamma\sin\psi\frac{\text{d}\psi}{\text{d}t}\right. \notag\\
+    +& \left.\frac{V^{2}}{r}\cos\gamma\left(\sin\gamma\cos\psi+\cos\gamma\sin^2\psi\tan\phi\right)\right]\vec{k} \label{eqModelTotal}
+\end{align}
 
 气动力的升力和阻力表达式为
 \begin{equation*}

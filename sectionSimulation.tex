@@ -9,11 +9,11 @@
 若忽略火星自转的影响，
 也可以建立向量形式的微分方程
 \begin{equation}
-    \ddot{\vec{r}} = \frac{\mu}{||\vec{r}||^3}\vec{r}+\vec{L}+\vec{D} \label{eqSimF3}
+    \ddot{\vec{r}} = \frac{\mu}{||\vec{r}||^3}\vec{r}+\vec{L}+\vec{D} \label{eqSimFA}
 \end{equation}
 其中阻力向量为
 \begin{align}
-    \vec{D} = -D\frac{\vec{v}}{||\vec{v}||} \label{eqSimF1}
+    \vec{D} = -D\frac{\vec{v}}{||\vec{v}||} \label{eqSimFD}
 \end{align}
 升力向量$\vec{L}$与铅垂面夹角为倾侧角$\sigma$，
 为了能将$\vec{L}$用其他已知向量表示，
@@ -27,9 +27,11 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
 即
 \begin{align}
     \vec{n}_2 =& \frac{\vec{r}\times\vec{v}}{||\vec{r}\times\vec{v}||} \notag\\
-    \vec{L}=\vec{n}_1\cos\sigma + \vec{n}_2\sin\sigma \label{eqSimF2}
+    \vec{L}=\vec{n}_1\cos\sigma + \vec{n}_2\sin\sigma \label{eqSimFL}
 \end{align}
-微分方程式\eqref{eqSimF3}\eqref{eqSimF1}\eqref{eqSimF2}共同组成被控对象模型。
+% 在升力系数$C_L$和阻力系数$C_D$均为常数的假设下，
+% 升力向量$\vec{L}$和阻力向量$\vec{D}$的夹角保持不变，
+微分方程式\eqref{eqSimFA}\eqref{eqSimFD}\eqref{eqSimFL}共同组成被控对象模型。
 建立飞行器被控对象模型的模块框图如图\ref{figSimPlant}所示。
 \begin{center}
 	\includegraphics[scale=0.8]{plant.pdf}  \\
@@ -37,30 +39,25 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
 \end{center}
 图中，被控对象的输入(控制量)为倾侧角$\sigma$，
 输出为位置$\vec{r}$。
-图中的3个多输入单输出函数分别为式\eqref{eqSimF1Total}\eqref{eqSimF2Total}\eqref{eqSimF3Total}
+图中的两个多输入单输出函数分别为式\eqref{eqSimFLDTotal}\eqref{eqSimFATotal}
 \begin{align}
     \left\{\begin{aligned}
     h =& ||\vec{r}||-R \\
     \rho =& \rho_0e^{-h/h_s} \\
     D =& \frac{1}{2}\rho||\vec{v}||^2S_{\text{ref}}C_D \\
-    \vec{D} =& f_1(\vec{r},\vec{v}) = -D\frac{\vec{v}}{||\vec{v}||}
-\end{aligned}\right. \label{eqSimF1Total}
-\end{align}
-\begin{align}
-    \left\{\begin{aligned}
-    h =& ||\vec{r}||-R \\
-    \rho =& \rho_0e^{-h/h_s} \\
-    L =& \frac{1}{2}\rho||\vec{v}||^2S_{\text{ref}}C_L \\
-    \vec{n}_2 =& \frac{\vec{r}\times\vec{v}}{||\vec{r}\times\vec{v}||} \\
+    \vec{D} =& f_1(\vec{r},\vec{v}) = -D\frac{\vec{v}}{||\vec{v}||} \\
+    L =& DC_{LD} \\
     \vec{n}_1 =& \frac{\vec{r}}{||\vec{r}||} \\
-    \vec{L} =& f_2(\vec{r},\vec{v},\sigma) = L(\vec{n}_1\cos\sigma + \vec{n}_2\sin\sigma)
-\end{aligned}\right. \label{eqSimF2Total}
+    \vec{n}_2 =& \frac{\vec{r}\times\vec{v}}{||\vec{r}\times\vec{v}||} \\
+    \vec{L} =& f_2(\vec{r},\vec{v},\sigma) = L(\vec{n}_1\cos\sigma + \vec{n}_2\sin\sigma) \\
+    \vec{f}_{LD} =& f_{LD}(\vec{r},\vec{v},\sigma) = \vec{L} + \vec{D}
+\end{aligned}\right. \label{eqSimFLDTotal}
 \end{align}
 \begin{equation}
-    \ddot{\vec{r}} = f_3(\vec{r},\vec{L},\vec{D}) = \frac{\mu}{||\vec{r}||^3}\vec{r}+\vec{L}+\vec{D} \label{eqSimF3Total}
+    \ddot{\vec{r}} = f_{LD}(\vec{r},\vec{f}_{LD}) = \frac{\mu}{||\vec{r}||^3}\vec{r}+\vec{f}_{LD} \label{eqSimFATotal}
 \end{equation}
-式中$R$为火星半径。
+式中$R$为火星半径，$C_{LD}=C_L/C_D$为升阻比。
 
 % ////////////////////////////////////////
-\subsection{直通模块与端点模块}
+\subsection{仿真结果}
 

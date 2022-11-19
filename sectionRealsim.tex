@@ -38,14 +38,17 @@
 然后可以计算出实际时间/速度/距离
 和求解器时间/速度/距离之间的一些换算关系
 \begin{align*}
-v_1 =& \frac{\text{d}r_1}{\text{d}t_1}
+&v_1 = \frac{\text{d}r_1}{\text{d}t_1}
  = \frac{10^{-6}\text{d}r}{10^{-4}\text{d}t} = 10^{-2}v \\
-a_1 =& \frac{\text{d}}{\text{d}t_1}\frac{\text{d}r_1}{\text{d}t_1}
- = 10^2\frac{\text{d}^2r}{\text{d}t^2} \\
-\mu_1(\frac{(10^{-6}\text{km})^3}{\text{kg}\cdot(10^{-4}\text{s})^2})
- =& 10^{-10}\mu(\frac{\text{km}^3}{\text{kg}\cdot \text{s}^2}) \\
--\frac{\mu_1}{r_1^2} =& -10^2\frac{\mu}{r^2} = 10^2\frac{\text{d}^2r}{\text{d}t^2} = a_1
+&a_1 = \frac{\text{d}}{\text{d}t_1}\frac{\text{d}r_1}{\text{d}t_1}
+ = 10^2\frac{\text{d}^2r}{\text{d}t^2} = 10^2a \\
+&\mu_1\left[\frac{(10^{-6}\text{km})^3}{\text{kg}\cdot(10^{-4}\text{s})^2}\right]
+ = 10^{-10}\mu\left[\frac{\text{km}^3}{\text{kg}\cdot \text{s}^2}\right] \\
+&-\frac{\mu_1}{r_1^2} = -10^2\frac{\mu}{r^2}
+ = 10^2\frac{\text{d}^2r}{\text{d}t^2} = a_1
 \end{align*}
+其中引力常数$\mu$的单位中包含时间/距离量纲，
+因此也需要换算。
 可以验证，实际中的微分方程
 $$a=-\frac{\mu}{r^2}$$
 变换到求解器中仍然为
@@ -55,7 +58,7 @@ $$a_1=-\frac{\mu_1}{r_1^2}$$
 若仿真步长设置为0.01求解器时间，仿真展示软件每帧仿真10步，
 则换算到实际时间上的步长为100秒，每帧代表1000秒，
 按60帧计算，则展示时间1秒等于实际时间$6\times10^4$秒，
-地球速度按30km/s算则展示时间1秒内地球走过$1.8\times10^6$km，
+地球的轨道速度按30km/s算则展示时间1秒内地球走过$1.8\times10^6$km，
 换算回仿真中则走过1.8展示距离。
 换一种方法计算，
 地球的求解器速度是$v_1=10^{-2}\times30=0.3$，
@@ -70,14 +73,33 @@ $$a_1=-\frac{\mu_1}{r_1^2}$$
 也就是在一次仿真结束后展示静态仿真结果。
 此时虽然不需要考虑展示时间/速度/距离，
 但求解器时间/速度/距离仍然需要考虑。
-针对本文的火星气动捕获场景，
-将换算公式\eqref{eqRealConvert}改为，
-\begin{equation}
-    t_1=10^{-4}t,\ r_1=10^{-3}r
-\end{equation}
-则。
+本文的火星气动捕获场景中，
+火星半径约$3400$km，
+全局飞行时间处于约$10^4$秒数量级，
+采样点间隔取1秒，
+仿真步长取$1e-3$，
+则式\eqref{eqRealConvert}中取
+$r'=10^{-3}r$，$t'=10^{-3}t$，
+指求解器1单位距离表示实际距离$1000$千米，
+求解器1单位时间表示实际时间$1000$秒。
+对应的一些变量和常数的换算关系如下
+\begin{align*}
+    &v' = v \\
+    &a' = 10^3a \\
+    &\mu'\left[\frac{(10^{-3}\text{km})^3}{\text{kg}\cdot(10^{-3}\text{s})^2}\right]
+     = 10^{-3}\mu\left[\frac{\text{km}^3}{\text{kg}\cdot \text{s}^2}\right] \\
+    &-\frac{\mu'}{r'^2} = -10^3\frac{\mu}{r^2} = 10^3a = a' \\
+    &\rho_0'\left[\frac{\text{kg}}{(10^{-3}\text{km})^3}\right]
+    = 10^9\rho_0\left[\frac{\text{kg}}{\text{km}^3}\right] \\
+    &h_s'[10^{-3}\text{km}] = 10^{-3}h_s[\text{km}] \\
+    &S_\text{ref}'[(10^{-3}\text{km})^2] = 10^{-6}S_\text{ref}[\text{km}^2]
+\end{align*}
+另由量纲运算可得
+升力系数和阻力系数的单位为$10^{-3}$，
+升阻比无单位，均不需要换算。
 
 如果仿真需要展示系统运动的动态过程，
 则应使用实时仿真，否则应使用非实时仿真。
 本文中火星气动捕获制导结果仅需要展示最终制导轨迹，
-因此使用使用非实时仿真。
+因此使用使用非实时仿真，
+不需要考虑展示时间/速度/距离。

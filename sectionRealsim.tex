@@ -10,9 +10,9 @@
 需要对一些公式的单位进行换算。
 
 万有引力公式
-\begin{equation}
-    \frac{\text{d}^2\vec{r}}{\text{d}t^2}=-\frac{\mu}{r^3}\vec{r} \label{eqRealGravity}
-\end{equation}
+\begin{equation*}
+    \frac{\text{d}^2\vec{r}}{\text{d}t^2}=-\frac{\mu}{r^3}\vec{r}
+\end{equation*}
 中，$r$的单位是km，$t$的单位是s。
 因为实际的尺度太大，一个天文单位达到了$10^8$数量级，
 为了便于仿真，
@@ -38,16 +38,16 @@
 然后可以计算出实际时间/速度/距离
 和求解器时间/速度/距离之间的一些换算关系
 \begin{align*}
-&\bar{v} = \frac{\text{d}\bar{r}}{\text{d}\bar{t}}
- = \frac{10^{-6}\text{d}r}{10^{-4}\text{d}t} = 10^{-2}v \\
-&\bar{a} = \frac{\text{d}}{\text{d}\bar{t}}\frac{\text{d}\bar{r}}{\text{d}\bar{t}}
- = 10^2\frac{\text{d}^2r}{\text{d}t^2} = 10^2a \\
-&\bar{\mu}\left[\frac{(10^{-6}\text{km})^3}{\text{kg}\cdot(10^{-4}\text{s})^2}\right]
- = 10^{-10}\mu\left[\frac{\text{km}^3}{\text{kg}\cdot \text{s}^2}\right] \\
-&-\frac{\bar{\mu}}{\bar{r}^2} = -10^2\frac{\mu}{r^2}
- = 10^2\frac{\text{d}^2r}{\text{d}t^2} = \bar{a}
-\end{align*}
-其中引力常数$\mu$的单位中包含时间/距离量纲，
+    &\bar{v} = \frac{\text{d}\bar{r}}{\text{d}\bar{t}}
+     = \frac{10^{-6}\text{d}r}{10^{-4}\text{d}t} = 10^{-2}v \\
+    &\bar{a} = \frac{\text{d}}{\text{d}\bar{t}}\frac{\text{d}\bar{r}}{\text{d}\bar{t}}
+     = 10^2\frac{\text{d}^2r}{\text{d}t^2} = 10^2a \\
+    &\bar{\mu}\left[\frac{(10^{-6}\text{km})^3}{(10^{-4}\text{s})^2}\right]
+     = 10^{-10}\mu\left[\frac{\text{km}^3}{\text{s}^2}\right] \\
+    &-\frac{\bar{\mu}}{\bar{r}^2} = -10^2\frac{\mu}{r^2}
+     = 10^2\frac{\text{d}^2r}{\text{d}t^2} = \bar{a}
+    \end{align*}
+    其中引力常数$\mu$的单位中包含时间/距离量纲，
 因此也需要换算。
 可以验证，实际中的微分方程
 $$a=-\frac{\mu}{r^2}$$
@@ -86,8 +86,8 @@ $\bar{r}=10^{-3}r$，$\bar{t}=10^{-4}t$，
 \begin{align*}
     &\bar{v} = 10v \\
     &\bar{a} = 10^5a \\
-    &\bar{\mu}\left[\frac{(10^{-3}\text{km})^3}{\text{kg}\cdot(10^{-4}\text{s})^2}\right]
-     = 10^{-1}\mu\left[\frac{\text{km}^3}{\text{kg}\cdot \text{s}^2}\right] \\
+    &\bar{\mu}\left[\frac{(10^{-3}\text{km})^3}{(10^{-4}\text{s})^2}\right]
+     = 10^{-1}\mu\left[\frac{\text{km}^3}{\text{s}^2}\right] \\
     &-\frac{\bar{\mu}}{\bar{r}^2} = -10^5\frac{\mu}{r^2} = 10^5a = \bar{a} \\
     &\bar{\rho_0}\left[\frac{\text{kg}}{(10^{-3}\text{km})^3}\right]
     = 10^9\rho_0\left[\frac{\text{kg}}{\text{km}^3}\right] \\
@@ -103,23 +103,33 @@ $\bar{r}=10^{-3}r$，$\bar{t}=10^{-4}t$，
 因此使用使用非实时仿真，
 不需要考虑展示时间/速度/距离。
 
-另外可以证明单位换算在显著加快仿真速度的条件下，
-微分方程数值求解的精度也明显增加。
+单位换算在显著加快仿真速度的同时，
+微分方程数值求解的精度也会受到影响。
 已知四阶龙格库塔法的局部截断误差为$O(h^5$)\cite{mqingyang2019}，
-取步长为$h_1=10^{-3}$秒，
-仿真10秒的累积误差为
+取无量纲步长为$h_0=10^{-3}$，
+对微分方程
+\[\frac{\text{d}\bar{r}}{\text{d}\bar{t}}=\bar{v}\]
+局部截断误差为$\Delta\bar{r}=Ch_0^5=10^{-15}C$，
+换算回真实值得到$\Delta r=10^6\Delta\bar{r}=10^{-9}C$，
+同理可得
+$\Delta v=10^2\Delta\bar{v}=10^{-13}C$，
+$\Delta a=10^{-2}\Delta\bar{a}=10^{-17}C$。
+以$r$为例，
+换算单位前仿真10秒的累积误差为
 \[e_1=10^4C\times 10^{-15}=10^{-11}C\]
-若将时间单位换算成千秒，
-取步长$h_2=10^{-3}$千秒，
-仿真10秒的累积误差为
-\[e_2=10C\times 10^{-15}=10^{-14}C\]
+换算单位后，时间单位换算成万秒，
+仍取无量纲步长$h_0=10^{-3}$，
+即实际步长为$h_2=10^{-3}$万秒，
+仿真10秒就是1个步长，累积误差等于局部截断误差
+\[e_2=10^{-9}C\]
 若不换算单位而只是改变步长，
 取步长$h_3=1$秒，
-尽管$h_3=h_2$，
-但累积误差高达
-\[e_3=10C\times 1=10C\]
+尽管实际上$h_3=10h_2$，
+但仿真10秒的累积误差高达
+\[e_3=10C\times 1^5=10C\]
 因此在不同的仿真中，
-为了保证仿真速度和精度，
-需要保持仿真步长基本不变，
-而由此带来的仿真步长与仿真时间不匹配的情况
-应使用单位换算的方法解决。
+在数值求解的仿真步长不变的前提下，
+使用单位换算的方法可以显著提高仿真速度，
+同时也能保证仿真精度不会显著下降，
+对于一些高阶导量甚至提高了仿真精度。
+(对这一现象我不是很理解)

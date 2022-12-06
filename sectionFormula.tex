@@ -1,5 +1,7 @@
 \section{基本公式推导}
-下面推导常用的一些公式。
+下面推导常用的一些公式。其中
+角速度公式和相对加速度公式用于飞行器再入动力学方程，
+递推最小二乘公式用于基于特征模型的全系数自适应控制。
 
 % ////////////////////////////////////////
 \subsection{角速度公式}
@@ -147,3 +149,103 @@ $[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示坐标系$\mathcal{F}_2$的三轴单位
     + {\frac {5}{4}}e^{2}\sin {2M} \\
     &+ {\frac {13}{12}}e^{3}\sin {3M}+O(e^{4})
 \end{align*}
+
+% ////////////////////////////////////////////////////////////////
+\subsection{递推最小二乘公式}
+对多组数据$\boldsymbol{x}$和$y$，满足
+\[y_i = \boldsymbol{x}^\mathrm{T}_i\boldsymbol{\theta}\]
+其中$\boldsymbol{x}$是输入数据向量，$y$是输出数据标量。写成矩阵形式
+\[\boldsymbol{y} = \mathbf{X}\theta\]
+其中
+\begin{align*}
+    \mathbf{X} =& \left[\begin{matrix}
+        \boldsymbol{x}^\mathrm{T}_1 \\
+        \boldsymbol{x}^\mathrm{T}_2 \\
+        \boldsymbol{x}^\mathrm{T}_3
+    \end{matrix}\right] \\
+    \mathbf{X}^\mathrm{T}_k =& \left[\begin{matrix}
+        \boldsymbol{x}_1 & \boldsymbol{x}_2 & \boldsymbol{x}_3 &
+        \cdots & \boldsymbol{x}_k
+    \end{matrix}\right]
+\end{align*}
+最小二乘解为
+\begin{equation*}
+    \boldsymbol{\theta}
+    =(\mathbf{X}^\mathrm{T}\mathbf{X})^{-1}
+    \mathbf{X}^\mathrm{T}\boldsymbol{y}\tag{2.1}
+\end{equation*}
+令
+\begin{align*}
+    \mathbf{P}^{-1} =& \mathbf{X}^\mathrm{T}\mathbf{X} \\
+    \mathbf{P}_k^{-1} =& \sum_{i=1}^k\boldsymbol{x}_i\boldsymbol{x}^\mathrm{T}_i
+    = \sum_{i=1}^{k-1}\boldsymbol{x}_i\boldsymbol{x}^\mathrm{T}_i
+    +\boldsymbol{x}_k\boldsymbol{x}^\mathrm{T}_k \\
+    =& \mathbf{P}_{k-1}^{-1} + \boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
+\end{align*}
+同理可得
+\begin{equation*}
+    \mathbf{X}_k^\mathrm{T}\boldsymbol{y}_k
+    =\mathbf{X}_{k-1}^\mathrm{T}\boldsymbol{y}_{k-1}
+    +\boldsymbol{x}_ky_k
+\end{equation*}
+于是代入式(1)得到
+\begin{align*}
+\boldsymbol{\theta}_k =& \mathbf{P}_k\mathbf{X}_k^\mathrm{T}\boldsymbol{y}_k \\
+=& \mathbf{P}_k(\mathbf{X}_{k-1}^\mathrm{T}\boldsymbol{y}_{k-1}
+ +\boldsymbol{x}_ky_k) \\
+=& \mathbf{P}_k(\mathbf{P}_{k-1}^{-1}\boldsymbol{\theta}_{k-1}
+ +\boldsymbol{x}_ky_k) \\
+=& \mathbf{P}_k(\mathbf{P}_k^{-1}\boldsymbol{\theta}_{k-1}
+ -\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}+\boldsymbol{x}_ky_k) \\
+=& \boldsymbol{\theta}_{k-1} + \mathbf{P}_k\boldsymbol{x}_k
+ (y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
+=& \boldsymbol{\theta}_{k-1}
+ +(\mathbf{P}_{k-1}^{-1} + \boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T})^{-1}
+ \boldsymbol{x}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
+=& \boldsymbol{\theta}_{k-1}
+ +(\mathbf{P}_{k-1}-\frac{\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
+ \mathbf{P}_{k-1}}{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k})
+ \boldsymbol{x}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
+\end{align*}
+其中
+\begin{equation*}
+    \mathbf{P}_k =
+ \mathbf{P}_{k-1}-\frac{\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
+ \mathbf{P}_{k-1}}{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k}
+\end{equation*}
+用到了下面的矩阵求逆公式及其引理
+\begin{align*}
+(\mathbf{A}+\mathbf{B C D})^{-1} =& \mathbf{A}^{-1}-\mathbf{A}^{-1} \mathbf{B}
+(\mathbf{D A} \mathbf{A}^{-1} \mathbf{B}+\mathbf{C}^{-1})^{-1} \mathbf{D A}^{-1} \\
+(\mathbf{A}+\mathbf{u} \mathbf{u}^{T})^{-1} =& \mathbf{A}^{-1}
+ -\frac{\mathbf{A}^{-1} \mathbf{u} \mathbf{u}^{T} \mathbf{A}^{-1}}
+ {1+\mathbf{u}^{T} \mathbf{A}^{-1} \mathbf{u}}
+\end{align*}
+令
+\begin{equation*}
+    \mathbf{K}_k = \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}
+{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k}
+\end{equation*}
+则
+\begin{align*}
+\mathbf{P}_k =& (\mathbf{I}-\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T})\mathbf{P}_{k-1}\\
+\mathbf{P}_k\boldsymbol{x}_k =& \mathbf{P}_{k-1}\boldsymbol{x}_k
+ -\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k \\
+=& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k
+ (1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k)
+ -\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
+ \mathbf{P}_{k-1}\boldsymbol{x}_k}
+ {1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
+=& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}
+ {1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
+=& \mathbf{K}_k \\
+\end{align*}
+总结成递推公式得到
+\begin{align*}
+\mathbf{K}_k =& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}{1+\boldsymbol{x}_k^\mathrm{T}
+\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
+\mathbf{P}_k =& (\mathbf{I}-\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T})\mathbf{P}_{k-1}\\
+\boldsymbol{\theta}_k =& \boldsymbol{\theta}_{k-1}
+ +\mathbf{K}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1})
+\end{align*}
+

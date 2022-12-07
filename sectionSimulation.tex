@@ -2,7 +2,7 @@
 % Sim
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{仿真}
-本文使用基于C++的仿真器\cite{olzhn2021}进行仿真。
+本文使用微分方程求解器Simucpp\cite{olzhn2021}进行仿真。
 下文介绍各部分设计原理。
 
 % ////////////////////////////////////////
@@ -75,11 +75,16 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
     倾侧角(rad) & 1 \\
     \bottomrule
 \end{tabular}\end{center}
-
+3D仿真结果如图\ref{figSim1View}所示。
 \begin{center}
 	\includegraphics[scale=0.2]{sim1Verticalview.png}  \\
 	\includegraphics[scale=0.2]{sim1Sideview.png}  \\
-	\figcaption{确定轨迹仿真结果}\label{figSim1}
+	\figcaption{确定轨迹仿真结果}\label{figSim1View}
+\end{center}
+轨道高度变化曲线如图\ref{figSim1Height}所示。
+\begin{center}
+	\includegraphics[scale=0.6]{sim1Height.pdf} \\
+	\figcaption{轨道高度变化曲线}\label{figSim1Height}
 \end{center}
 
 

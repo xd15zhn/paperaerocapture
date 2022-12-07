@@ -62,19 +62,25 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
 
 % ////////////////////////////////////////
 \subsection{仿真结果}
-首先展示不使用制导律，控制量输出常值的仿真结果。
-进入点轨道参数和控制量如下。
-\begin{center}\begin{tabular}{ll}
+给定进入点轨道初值和控制目标如下。
+\begin{center}\begin{tabular}{lll}
     \toprule
-    名称 & 值 \\
+    条件 & 初值 & 目标 \\
     \midrule
-    进入速度(km/s) & 5.8 \\
+    进入点速度(km/s) & 5.8 \\
     进入点高度(km) & 125 \\
-    进入航迹角(rad) & 0.175(10$^\circ$) \\
-    进入航向角(rad) & 0 \\
-    倾侧角(rad) & 1 \\
+    进入航迹角$\gamma$(rad) & 0.192(11$^\circ$) \\
+    偏心率 & 1.75 & 0.215 \\
+    轨道倾角$i$(rad) & 0.524(30$^\circ$) & 0.524 \\
+    升交点赤经(rad) & 0 & \\
+    近拱点幅角(rad) & 0 & \\
+    远拱点高度(km) & & 2250 \\
+    近拱点高度(km) & & 250 \\
     \bottomrule
 \end{tabular}\end{center}
+设定参数中，偏心率可由进入点速度、进入点高度、进入航迹角得出，
+由第\ref{secFormElement}小节公式可验证设定参数基本正确。
+首先展示不使用制导律，控制量输出常值的仿真结果，取$\sigma=1$。
 3D仿真结果如图\ref{figSim1View}所示。
 \begin{center}
 	\includegraphics[scale=0.2]{sim1Verticalview.png}  \\

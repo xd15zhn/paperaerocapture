@@ -139,10 +139,46 @@ $[\vec{a}_x\ \vec{a}_y\ \vec{a}_z]$表示坐标系$\mathcal{F}_2$的三轴单位
 即$\dot{\vec{\omega}}=\overset{\circ}{\vec{\omega}}$。
 
 % ////////////////////////////////////////////////////////////////
-\subsection{轨道六根数和位置速度向量}
+\subsection{轨道六根数和位置速度向量} \label{secFormElement}
 轨道六根数指：
 半长轴(a)、偏心率(e)，轨道倾角(i)，升交点赤经($\Omega$)、近地点幅角($\omega$)、真近点角($\phi$)。
 根据文献\cite{mruiter2012}中的公式计算相关参数。
+由下式计算轨道能量
+\begin{equation*}
+    \mathcal{E}=-\frac{\mu}{2a}=\frac{v_0^2}{2}-\frac{\mu}{r_0} = \frac{v_{inf}^2}{2}
+\end{equation*}
+由下式计算角动量绝对值
+\begin{align*}
+    \vec{h} =& \vec{r}\times\vec{v} \\
+    |\vec{h}| =& \vec{r}\cdot\vec{v}\cos\gamma
+\end{align*}
+其中，$h$为角动量，$\gamma$为进入点航迹角，
+$\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
+计算双曲线轨道偏心率$e$
+\begin{align*}
+    &a=\frac{p}{1-e^2},p=\frac{h^2}{\mu} \\
+    &e=\sqrt{1-\frac{h^2}{a\mu}}
+\end{align*}
+其中$p$称为半通径。
+计算真近点角$f$
+\begin{align*}
+    &r=\frac{p}{1+e\cos f} \\
+    &f=\arccos(\frac{1}{e}(\frac{h^2}{\mu r}-1))
+\end{align*}
+由轨道元素计算位置和速度向量
+\begin{align}
+    R =& \left[\begin{matrix}
+        c_\Omega c_\omega-s_\Omega c_i s_\omega & -c_\Omega s_\omega-s_\Omega c_i c_\omega & s_\Omega s_i \\
+        s_\Omega c_\omega+c_\Omega c_i s_\omega & -s_\Omega s_\omega+c_\Omega c_i c_\omega & -c_\Omega s_i \\
+        s_i s_\omega & s_i c_\omega & c_i
+    \end{matrix}\right] \notag\\
+    \vec{r} =& R\left[\begin{matrix}
+        \frac{a(1-e^2)}{1+e\cos\theta}\cos\theta \\ \frac{a(1-e^2)}{1+e\cos\theta}\sin\theta \\ 0
+    \end{matrix}\right] \notag\\
+    \vec{v} =& R\left[\begin{matrix}
+        -\sqrt{\frac{\mu}{a(1-e^2)}}\sin\theta \\ \sqrt{\frac{\mu}{a(1-e^2)}}(e+\cos\theta) \\ 0
+    \end{matrix}\right] \label{eqFormEle2RV}
+\end{align}
 根据平近点角计算真近点角\cite{msmart1977}
 \begin{align*}
     f =& M+\left(2e-{\frac {1}{4}}e^{3}\right)\sin {M}

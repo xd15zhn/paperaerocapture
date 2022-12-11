@@ -166,19 +166,19 @@ $\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
     &f=\arccos(\frac{1}{e}(\frac{h^2}{\mu r}-1))
 \end{align*}
 由轨道元素计算位置和速度向量
-\begin{align}
+\begin{align*}
     R =& \left[\begin{matrix}
         c_\Omega c_\omega-s_\Omega c_i s_\omega & -c_\Omega s_\omega-s_\Omega c_i c_\omega & s_\Omega s_i \\
         s_\Omega c_\omega+c_\Omega c_i s_\omega & -s_\Omega s_\omega+c_\Omega c_i c_\omega & -c_\Omega s_i \\
         s_i s_\omega & s_i c_\omega & c_i
-    \end{matrix}\right] \notag\\
+    \end{matrix}\right] \\
     \vec{r} =& R\left[\begin{matrix}
         \frac{a(1-e^2)}{1+e\cos\theta}\cos\theta \\ \frac{a(1-e^2)}{1+e\cos\theta}\sin\theta \\ 0
-    \end{matrix}\right] \notag\\
+    \end{matrix}\right] \\
     \vec{v} =& R\left[\begin{matrix}
         -\sqrt{\frac{\mu}{a(1-e^2)}}\sin\theta \\ \sqrt{\frac{\mu}{a(1-e^2)}}(e+\cos\theta) \\ 0
-    \end{matrix}\right] \label{eqFormEle2RV}
-\end{align}
+    \end{matrix}\right]
+\end{align*}
 根据平近点角计算真近点角\cite{msmart1977}
 \begin{align*}
     f =& M+\left(2e-{\frac {1}{4}}e^{3}\right)\sin {M}
@@ -188,100 +188,107 @@ $\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
 
 % ////////////////////////////////////////////////////////////////
 \subsection{递推最小二乘公式}
-对多组数据$\boldsymbol{x}$和$y$，满足
-\[y_i = \boldsymbol{x}^\mathrm{T}_i\boldsymbol{\theta}\]
-其中$\boldsymbol{x}$是输入数据向量，$y$是输出数据标量。写成矩阵形式
-\[\boldsymbol{y} = \mathbf{X}\theta\]
-其中
-\begin{align*}
-    \mathbf{X} =& \left[\begin{matrix}
-        \boldsymbol{x}^\mathrm{T}_1 \\
-        \boldsymbol{x}^\mathrm{T}_2 \\
-        \boldsymbol{x}^\mathrm{T}_3
-    \end{matrix}\right] \\
-    \mathbf{X}^\mathrm{T}_k =& \left[\begin{matrix}
-        \boldsymbol{x}_1 & \boldsymbol{x}_2 & \boldsymbol{x}_3 &
-        \cdots & \boldsymbol{x}_k
-    \end{matrix}\right]
-\end{align*}
-最小二乘解为
+对多组数据$\vec{x}$和$y$，满足
+\[y_i = \vec{x}^\mathrm{T}_i\vec{\theta}\]
+其中$\vec{x}$是输入数据向量，$y$是输出数据标量。写成矩阵形式
+\[\vec{y} = X\vec{\theta}\]
+其中(以3组数据为例)
 \begin{equation*}
-    \boldsymbol{\theta}
-    =(\mathbf{X}^\mathrm{T}\mathbf{X})^{-1}
-    \mathbf{X}^\mathrm{T}\boldsymbol{y}\tag{2.1}
+    X = \left[\begin{matrix}
+        \vec{x}^\mathrm{T}_1 \\
+        \vec{x}^\mathrm{T}_2 \\
+        \vec{x}^\mathrm{T}_3
+    \end{matrix}\right]
 \end{equation*}
-令
+有$k$组数据时记作
+\begin{equation*}
+    X^\mathrm{T}_k = \left[\begin{matrix}
+        \vec{x}_1 & \vec{x}_2 & \vec{x}_3 &
+        \cdots & \vec{x}_k
+    \end{matrix}\right]
+\end{equation*}
+已知最小二乘法的解为
+\begin{equation*}
+    \vec{\theta}
+    =(X^\mathrm{T}X)^{-1}
+    X^\mathrm{T}\vec{y} \label{eqFormLS}
+\end{equation*}
+令$P = (X^\mathrm{T}X)^{-1}$，
+则加上递推后
 \begin{align*}
-    \mathbf{P}^{-1} =& \mathbf{X}^\mathrm{T}\mathbf{X} \\
-    \mathbf{P}_k^{-1} =& \sum_{i=1}^k\boldsymbol{x}_i\boldsymbol{x}^\mathrm{T}_i
-    = \sum_{i=1}^{k-1}\boldsymbol{x}_i\boldsymbol{x}^\mathrm{T}_i
-    +\boldsymbol{x}_k\boldsymbol{x}^\mathrm{T}_k \\
-    =& \mathbf{P}_{k-1}^{-1} + \boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
+    P_k^{-1} =& X_k^\mathrm{T}X_k
+    = \sum_{i=1}^k\vec{x}_i\vec{x}^\mathrm{T}_i \\
+    =& \sum_{i=1}^{k-1}\vec{x}_i\vec{x}^\mathrm{T}_i
+    +\vec{x}_k\vec{x}^\mathrm{T}_k \\
+    =& P_{k-1}^{-1} + \vec{x}_k\vec{x}_k^\mathrm{T}
 \end{align*}
 同理可得
 \begin{equation*}
-    \mathbf{X}_k^\mathrm{T}\boldsymbol{y}_k
-    =\mathbf{X}_{k-1}^\mathrm{T}\boldsymbol{y}_{k-1}
-    +\boldsymbol{x}_ky_k
+    X_k^\mathrm{T}\vec{y}_k
+    =X_{k-1}^\mathrm{T}\vec{y}_{k-1}
+    +\vec{x}_ky_k
 \end{equation*}
-于是代入式(1)得到
+于是代入式\eqref{eqFormLS}得到
 \begin{align*}
-\boldsymbol{\theta}_k =& \mathbf{P}_k\mathbf{X}_k^\mathrm{T}\boldsymbol{y}_k \\
-=& \mathbf{P}_k(\mathbf{X}_{k-1}^\mathrm{T}\boldsymbol{y}_{k-1}
- +\boldsymbol{x}_ky_k) \\
-=& \mathbf{P}_k(\mathbf{P}_{k-1}^{-1}\boldsymbol{\theta}_{k-1}
- +\boldsymbol{x}_ky_k) \\
-=& \mathbf{P}_k(\mathbf{P}_k^{-1}\boldsymbol{\theta}_{k-1}
- -\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}+\boldsymbol{x}_ky_k) \\
-=& \boldsymbol{\theta}_{k-1} + \mathbf{P}_k\boldsymbol{x}_k
- (y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
-=& \boldsymbol{\theta}_{k-1}
- +(\mathbf{P}_{k-1}^{-1} + \boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T})^{-1}
- \boldsymbol{x}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
-=& \boldsymbol{\theta}_{k-1}
- +(\mathbf{P}_{k-1}-\frac{\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
- \mathbf{P}_{k-1}}{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k})
- \boldsymbol{x}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1}) \\
+    \vec{\theta}_k =& P_kX_k^\mathrm{T}\vec{y}_k \\
+    =& P_k(X_{k-1}^\mathrm{T}\vec{y}_{k-1}
+    +\vec{x}_ky_k) \\
+    =& P_k(P_{k-1}^{-1}\vec{\theta}_{k-1}
+    +\vec{x}_ky_k) \\
+    =& P_k(P_k^{-1}\vec{\theta}_{k-1}
+    -\vec{x}_k\vec{x}_k^\mathrm{T}\theta_{k-1}+\vec{x}_ky_k) \\
+    =& \vec{\theta}_{k-1} + P_k\vec{x}_k
+    (y_k-\vec{x}_k^\mathrm{T}\theta_{k-1}) \\
+    =& \vec{\theta}_{k-1}
+    +(P_{k-1}^{-1} + \vec{x}_k\vec{x}_k^\mathrm{T})^{-1}
+    \vec{x}_k(y_k-\vec{x}_k^\mathrm{T}\theta_{k-1}) \\
+    =& \vec{\theta}_{k-1}
+    +(P_{k-1}-\frac{P_{k-1}\vec{x}_k\vec{x}_k^\mathrm{T}
+    P_{k-1}}{1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k})
+    \vec{x}_k(y_k-\vec{x}_k^\mathrm{T}\theta_{k-1}) \\
 \end{align*}
 其中
 \begin{equation*}
-    \mathbf{P}_k =
- \mathbf{P}_{k-1}-\frac{\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
- \mathbf{P}_{k-1}}{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k}
+    P_k = P_{k-1}-\frac{P_{k-1}\vec{x}_k\vec{x}_k^\mathrm{T}
+    P_{k-1}}{1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k}
 \end{equation*}
 用到了下面的矩阵求逆公式及其引理
 \begin{align*}
-(\mathbf{A}+\mathbf{B C D})^{-1} =& \mathbf{A}^{-1}-\mathbf{A}^{-1} \mathbf{B}
-(\mathbf{D A} \mathbf{A}^{-1} \mathbf{B}+\mathbf{C}^{-1})^{-1} \mathbf{D A}^{-1} \\
-(\mathbf{A}+\mathbf{u} \mathbf{u}^{T})^{-1} =& \mathbf{A}^{-1}
- -\frac{\mathbf{A}^{-1} \mathbf{u} \mathbf{u}^{T} \mathbf{A}^{-1}}
- {1+\mathbf{u}^{T} \mathbf{A}^{-1} \mathbf{u}}
+    (A+\mathbf{BCD})^{-1} =& A^{-1}-A^{-1} B
+    (\mathbf{DA} A^{-1} B+C^{-1})^{-1} \mathbf{D A}^{-1} \\
+    (A+\vec{u}\vec{u}^\text{T})^{-1} =& A^{-1}
+    -\frac{A^{-1}\vec{u}\vec{u}^\text{T} A^{-1}}
+    {1+\vec{u}^\text{T}A^{-1}\vec{u}}
 \end{align*}
 令
 \begin{equation*}
-    \mathbf{K}_k = \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}
-{1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k}
+    K_k = \frac{P_{k-1}\vec{x}_k}
+    {1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k}
 \end{equation*}
 则
 \begin{align*}
-\mathbf{P}_k =& (\mathbf{I}-\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T})\mathbf{P}_{k-1}\\
-\mathbf{P}_k\boldsymbol{x}_k =& \mathbf{P}_{k-1}\boldsymbol{x}_k
- -\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k \\
-=& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k
- (1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k)
- -\mathbf{P}_{k-1}\boldsymbol{x}_k\boldsymbol{x}_k^\mathrm{T}
- \mathbf{P}_{k-1}\boldsymbol{x}_k}
- {1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
-=& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}
- {1+\boldsymbol{x}_k^\mathrm{T}\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
-=& \mathbf{K}_k \\
+    P_k =& (I-K_k\vec{x}_k^\mathrm{T})P_{k-1}\\
+    P_k\vec{x}_k =& P_{k-1}\vec{x}_k
+    -K_k\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k \\
+    =& \frac{P_{k-1}\vec{x}_k
+    (1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k)
+    -P_{k-1}\vec{x}_k\vec{x}_k^\mathrm{T}
+    P_{k-1}\vec{x}_k}
+    {1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k} \\
+    =& \frac{P_{k-1}\vec{x}_k}
+    {1+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k} \\
+    =& K_k \\
 \end{align*}
 总结成递推公式得到
-\begin{align*}
-\mathbf{K}_k =& \frac{\mathbf{P}_{k-1}\boldsymbol{x}_k}{1+\boldsymbol{x}_k^\mathrm{T}
-\mathbf{P}_{k-1}\boldsymbol{x}_k} \\
-\mathbf{P}_k =& (\mathbf{I}-\mathbf{K}_k\boldsymbol{x}_k^\mathrm{T})\mathbf{P}_{k-1}\\
-\boldsymbol{\theta}_k =& \boldsymbol{\theta}_{k-1}
- +\mathbf{K}_k(y_k-\boldsymbol{x}_k^\mathrm{T}\theta_{k-1})
-\end{align*}
-
+\begin{align}
+    K_k =& \frac{P_{k-1}\vec{x}_k}{1+\vec{x}_k^\mathrm{T}
+    P_{k-1}\vec{x}_k} \label{eqFormForget}\\
+    P_k =& (I-K_k\vec{x}_k^\mathrm{T})P_{k-1} \notag\\
+    \vec{\theta}_k =& \vec{\theta}_{k-1}
+    +K_k(y_k-\vec{x}_k^\mathrm{T}\theta_{k-1}) \notag
+\end{align}
+若考虑遗忘因子，式\eqref{eqFormForget}改为
+\begin{equation*}
+    K_k = \frac{P_{k-1}\vec{x}_k}
+    {\lambda+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k}
+\end{equation*}

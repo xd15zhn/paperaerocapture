@@ -208,11 +208,11 @@ $\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
     \end{matrix}\right]
 \end{equation*}
 已知最小二乘法的解为
-\begin{equation*}
+\begin{equation}
     \vec{\theta}
     =(X^\mathrm{T}X)^{-1}
     X^\mathrm{T}\vec{y} \label{eqFormLS}
-\end{equation*}
+\end{equation}
 令$P = (X^\mathrm{T}X)^{-1}$，
 则加上递推后
 \begin{align*}
@@ -254,8 +254,8 @@ $\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
 \end{equation*}
 用到了下面的矩阵求逆公式及其引理
 \begin{align*}
-    (A+\mathbf{BCD})^{-1} =& A^{-1}-A^{-1} B
-    (\mathbf{DA} A^{-1} B+C^{-1})^{-1} \mathbf{D A}^{-1} \\
+    (A+BCD)^{-1} =& A^{-1}-A^{-1} B
+    (DA^{-1}B+C^{-1})^{-1}DA^{-1} \\
     (A+\vec{u}\vec{u}^\text{T})^{-1} =& A^{-1}
     -\frac{A^{-1}\vec{u}\vec{u}^\text{T} A^{-1}}
     {1+\vec{u}^\text{T}A^{-1}\vec{u}}
@@ -292,3 +292,4 @@ $\vec{r}$和$\vec{v}$分别为进入点位置和速度向量。
     K_k = \frac{P_{k-1}\vec{x}_k}
     {\lambda+\vec{x}_k^\mathrm{T}P_{k-1}\vec{x}_k}
 \end{equation*}
+其中$\lambda\in(0,1]$为遗忘因子。

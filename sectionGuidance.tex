@@ -1,3 +1,6 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Guide
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{预测校正制导}
 理论上当大气入口条件和变轨目标确定后，
 即可得出一条确定轨迹，气动飞行期间不用施加控制即可实现既定的捕获任务。
@@ -19,22 +22,43 @@
 另一种是远拱点抬升速度增量，也就是在近拱点处开启发动机调整远拱点时，以速度增量大小作为评价指标。
 本文复现第一种目标。
 
-制导部分被控对象的输入是倾侧角，输出是远拱点误差。
+制导部分被控对象的输入是远拱点误差，输出是倾侧角。
 在离散控制器的每个更新时刻，计算如果保持当前输入的倾侧角指令不变，
-飞出大气层后以当前的位置和速度向量换算成轨道元素，进而求出远拱点误差。
+飞行器飞出大气层后以当前的位置和速度向量换算成轨道元素，进而求出远拱点误差。
 
 被控对象的特征模型为
-\begin{align*}
-    &y(k) = \Phi^{\text{T}}(k)\theta(k) + e(k) \\
-    &\theta(k) = \theta(k-1) + 
-\end{align*}
+\[ y(k) = \alpha_1(k)y(k-1) + \beta_0(k)u(k) \]
 预测校正制导的控制律使用线性反馈控制：
-\begin{align*}
+\begin{align}
     &u(k) = u(k-1) + u_L(k) \\
-    &u_L(k) = -\frac{l_1\alpha_1(k)y(k)}{\beta_0(k)}
-\end{align*}
+    &u_L(k) = -\frac{l_1\alpha_1(k)y(k)}{\beta_0(k)} \label{eqGuideCtrl}
+\end{align}
+其中控制量$u_L(k)$为一个倾侧角余弦变化量$\Delta\cos\sigma$。
 第一种制导目标中，
 \begin{equation*}
-    y(k) = r_a^e(k) - r_a^*
+    \Delta r = r_a^e(k) - r_a^*
 \end{equation*}
+
+因为输出的数值变化范围可能达到$10^4$km数量级，
+但又需要把输出映射到$\cos\sigma$，也就是$[-1,1]$的范围内，
+所以需要进行输入变换，将远拱点误差乘一个系数。
+输入和输出的关系为
+\begin{equation}
+    \Delta r = f(\Delta\cos\sigma) \label{eqGuideFunc}
+\end{equation}
+也就是说远拱点误差是倾侧角的垂直分量的函数。
+定义输入变换系数为式\eqref{eqGuideFunc}的泰勒展开的一阶项
+\begin{equation*}
+    A(k) = \frac{\partial r(k)}{\partial\cos\sigma(k)}
+    \cong \frac{\Delta r(k) - \Delta r^+(k)}{\cos\sigma(k) - \cos(\sigma(k)+10^\circ)}
+\end{equation*}
+其中$\Delta r^+(k)$是施加$\sigma(k)+10^\circ$倾侧角的情形下最终过渡轨道的远拱点误差。
+这样将式\eqref{eqGuideCtrl}中的$y(k)$施加动态输入变换
+\[y(k) = \frac{\Delta r}{A(k)}\]
+再取合适的控制器参数$l_1$即可将控制量$u_L(k)$限制在一个合适的区间内。
+制导整体框图如图\ref{figGuideSketch}所示。
+\begin{center}
+	\includegraphics[scale=0.7]{GuideSketch.pdf}  \\
+	\figcaption{制导整体框图}\label{figGuideSketch}
+\end{center}
 

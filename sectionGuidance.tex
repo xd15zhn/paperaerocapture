@@ -30,7 +30,7 @@
 \[ y(k) = \alpha_1(k)y(k-1) + \beta_0(k)u(k) \]
 预测校正制导的控制律使用线性反馈控制：
 \begin{align}
-    &u(k) = u(k-1) + u_L(k) \\
+    &u(k) = u(k-1) + u_L(k) \notag\\
     &u_L(k) = -\frac{l_1\alpha_1(k)y(k)}{\beta_0(k)} \label{eqGuideCtrl}
 \end{align}
 其中控制量$u_L(k)$为一个倾侧角余弦变化量$\Delta\cos\sigma$。
@@ -53,7 +53,8 @@
     \cong \frac{\Delta r(k) - \Delta r^+(k)}{\cos\sigma(k) - \cos(\sigma(k)+10^\circ)}
 \end{equation*}
 其中$\Delta r^+(k)$是施加$\sigma(k)+10^\circ$倾侧角的情形下最终过渡轨道的远拱点误差。
-这样将式\eqref{eqGuideCtrl}中的$y(k)$施加动态输入变换
+本文为方便起见统一采用弧度制，将$10^\circ$改为$0.1$rad。
+这样，将式\eqref{eqGuideCtrl}中的$y(k)$施加动态输入变换
 \[y(k) = \frac{\Delta r}{A(k)}\]
 再取合适的控制器参数$l_1$即可将控制量$u_L(k)$限制在一个合适的区间内。
 制导整体框图如图\ref{figGuideSketch}所示。

@@ -7,9 +7,8 @@
 
 % ////////////////////////////////////////
 \subsection{被控对象建模}
-可以用上一节中推导出的式\eqref{eqModelTotal}建立被控对象微分方程，
-若忽略火星自转的影响，
-也可以建立向量形式的微分方程
+可以用第2节中推导出的式\eqref{eqModelTotal}建立被控对象微分方程，
+若忽略火星自转的影响，也可以建立向量形式的微分方程
 \begin{equation}
     \ddot{\vec{r}} = \frac{\mu}{||\vec{r}||^3}\vec{r}+\vec{L}+\vec{D} \label{eqSimFA}
 \end{equation}
@@ -31,8 +30,6 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
     \vec{n}_2 =& \frac{\vec{r}\times\vec{v}}{||\vec{r}\times\vec{v}||} \notag\\
     \vec{L} =& \vec{n}_1\cos\sigma + \vec{n}_2\sin\sigma \label{eqSimFL}
 \end{align}
-% 在升力系数$C_L$和阻力系数$C_D$均为常数的假设下，
-% 升力向量$\vec{L}$和阻力向量$\vec{D}$的夹角保持不变，
 微分方程式\eqref{eqSimFA}\eqref{eqSimFD}\eqref{eqSimFL}共同组成被控对象模型。
 建立飞行器被控对象模型的模块框图如图\ref{figSimPlant}所示。
 \begin{center}
@@ -61,7 +58,7 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
 式中$R$为火星半径，$C_{LD}=C_L/C_D$为升阻比。
 
 % ////////////////////////////////////////
-\subsection{仿真结果}
+\subsection{简化模型仿真结果}
 给定进入点轨道初值和控制目标如下。
 \begin{center}\begin{tabular}{lll}
     \toprule
@@ -80,18 +77,52 @@ $\vec{n}_1$和$\vec{n}_2$即为用于表示$\vec{L}$的正交单位向量，
 \end{tabular}\end{center}
 设定参数中，偏心率可由进入点速度、进入点高度、进入航迹角得出，
 由第\ref{secFormElement}小节公式可验证设定参数基本正确。
+本文仿真暂不考虑轨道倾角。
+
 首先展示不使用制导律，控制量输出常值的仿真结果，取$\sigma=1$。
 3D仿真结果如图\ref{figSim1View}所示。
 \begin{center}
 	\includegraphics[scale=0.2]{sim1Verticalview.png}  \\
 	\includegraphics[scale=0.2]{sim1Sideview.png}  \\
-	\figcaption{确定轨迹仿真结果}\label{figSim1View}
+	\figcaption{确定轨迹3D仿真结果}\label{figSim1View}
 \end{center}
 图\ref{figSim1View}中的两幅图分别为正等轴测图和侧视图。
 轨道高度变化曲线如图\ref{figSim1Height}所示。
+横坐标为时间，单位为0.1秒，截取了前60秒。
 \begin{center}
 	\includegraphics[scale=0.6]{sim1Height.pdf} \\
 	\figcaption{轨道高度变化曲线}\label{figSim1Height}
 \end{center}
 
+% ////////////////////////////////////////
+\subsection{制导律仿真结果}
+制导律与各种仿真参数见程序。
+期望远拱点半径与制导律作用下的实际远拱点半径均为$5652.5$km。
+图\ref{figSim2State}所示分别为高度、倾侧角、侧向速度的变化曲线，
+原始数据的单位分别为km、rad、$10^{-4}$km/s。
+此时未加侧向制导的约束。
+\begin{center}
+	\includegraphics[scale=0.6]{Sim2State.pdf} \\
+	\figcaption{未加侧向制导约束时的多种状态曲线}\label{figSim2State}
+\end{center}
+加入侧向制导约束后的结果如图\ref{figSim2State2}所示。
+\begin{center}
+	\includegraphics[scale=0.6]{Sim2State2.pdf} \\
+	\figcaption{加入侧向制导约束后的多种状态曲线}\label{figSim2State2}
+\end{center}
+3D仿真结果如图\ref{figSim2View}所示，两幅图分别为俯视图和侧视图。
+\begin{center}
+	\includegraphics[scale=0.2]{sim2Verticalview.png}  \\
+	\includegraphics[scale=0.2]{sim2Sideview.png}  \\
+	\figcaption{制导律3D仿真结果}\label{figSim2View}
+\end{center}
+对精确模型的飞行器飞出大气层后的完整轨迹，使用解析法计算过程较复杂，
+所以大气层内外全程采用数值解，计算量较大，
+而且数值解难以计算飞行器在什么时候飞到了远拱点。
+数值解步长为$10^{-3}$，一个步长代表$0.01$秒，
+大气层内每100个步长、大气层外每1000个步长记录一次坐标。
+从飞出大气层时开始计算的4000秒时飞行器的向径为$5650.39$km，
+也就是说图\ref{figSim2View}中的轨迹末端并不是严格的远拱点。
 
+以后还将加入大气变化等不确定性因素，
+时间有限暂不展开。

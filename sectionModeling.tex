@@ -107,7 +107,7 @@ $\gamma$和$\psi$分别为航迹角和航向角。
     \frac{\text{d}\phi}{\text{d}t}&=\frac{V\cos\gamma\sin\psi}{r}
 \end{align*}
 对$\vec{V}$求导可以得到
-\begin{align}
+\begin{align*}
     &\frac{\text{d}\vec{V}}{\text{d}t}
     = \left[\sin\gamma\frac{\text{d}V}{\text{d}t}
     + V\cos\gamma\frac{\text{d}\gamma}{\text{d}t}
@@ -120,7 +120,21 @@ $\gamma$和$\psi$分别为航迹角和航向角。
     +& \left[\cos\gamma\cos\psi\frac{\text{d}V}{\text{d}t}
     - V\sin\gamma\cos\psi\frac{\text{d}\gamma}{\text{d}t}
     - V\cos\gamma\sin\psi\frac{\text{d}\psi}{\text{d}t}\right. \notag\\
-    +& \left.\frac{V^{2}}{r}\cos\gamma\left(\sin\gamma\cos\psi+\cos\gamma\sin^2\psi\tan\phi\right)\right]\vec{k} \label{eqModelTotal}
+    +& \left.\frac{V^{2}}{r}\cos\gamma\left(\sin\gamma\cos\psi+\cos\gamma\sin^2\psi\tan\phi\right)\right]\vec{k}
+\end{align*}
+部分省略的推导过程见\cite{mdelong2006}。
+飞行器再入制导的动力学方程为
+\begin{align}
+    &\frac{\mathrm{d} r}{\mathrm{~d} t}=V \sin \gamma \notag\\
+    &\frac{\mathrm{d} \theta}{\mathrm{d} t}=\frac{V \cos \gamma \sin \psi}{r \cos \phi} \notag\\
+    &\frac{\mathrm{d} \phi}{\mathrm{d} t}=\frac{V \cos \gamma \cos \psi}{r} \notag\\
+    &\frac{\mathrm{d} V}{\mathrm{~d} t}=-\frac{D}{m}-\frac{\mu_{m}}{r^{2}} \sin \gamma+ \notag\\
+    &\frac{\mathrm{d} \gamma}{\mathrm{d} t}=\frac{1}{V}\left[\frac{L \cos \sigma}{m}+\left(\frac{V^{2}}{r}-\frac{\mu_{m}}{r^{2}}\right) \cos \gamma+\right. \notag\\
+    &2 \omega_{m} V \cos \phi(\sin \psi \cos \phi+ \notag\\
+    &\left.\omega_{m}^{2} r \cos \phi(\cos \gamma \cos \phi+\sin \gamma \cos \phi \sin \psi)\right] \notag\\
+    &\frac{\mathrm{d} \psi}{\mathrm{d} t}=\frac{1}{V}\left[-\frac{L \sin \sigma}{m \cos \gamma}+\frac{V^{2}}{r} \cos \gamma \sin \psi \tan \phi\right]- \notag\\
+    &2 \omega_{m} V(\cos \phi \tan \gamma \cos \psi-\sin \phi)+ \notag\\
+    &\left.\frac{\omega_{m}^{2} r}{\cos \gamma} \sin \phi \cos \phi \sin \psi\right] \label{eqModelTotal}
 \end{align}
 
 气动力的升力和阻力表达式为
